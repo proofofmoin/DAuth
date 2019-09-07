@@ -13,6 +13,8 @@ const logger        = require('morgan');
 const proxy         = require('./lib/proxy');
 var cors            = require('cors');
 const request       = require('request');
+const rp = require('request-promise');
+
 
 // set up the app
 const app = express();
@@ -48,12 +50,15 @@ app.get('/shakehand/:pathurl',function(req, res) {
   console.log('done',unsign);
   //console.log(productionProfile)
   if (productionProfile.authorizedusers.includes(unsign)){
-   
-request('https://'+targetUrl, function (error, response, body) {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  res.sendFile(body) // Print the HTML for the Google homepage.
-});
+//proxy.web(req,res,{target: "http://"+targetUrl});
+rp("http://"+targetUrl)
+  .then(function(html) {
+    console.log(html);
+    res.send(html);
+  })
+  .catch(function(err) {
+    //handle error
+  });
   }
   else{
     res.sendStatus(403);

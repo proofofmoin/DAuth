@@ -4,8 +4,8 @@
   "description": "TDA",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "node server/bin/www",
-    "client": "node client/clienthost/bin/www"
+    "server": "nodemon server/bin/www",
+    "client": "nodemon client/clienthost/bin/www"
   },
   "dependencies": {
     "@evan.network/api-blockchain-core": "^2.11.0",
@@ -13,6 +13,7 @@
     "cookie-parser": "^1.4.4",
     "http-proxy": "^1.17.0",
     "morgan": "^1.9.1",
+    "request-promise": "^4.2.4",
     "web3": "^1.2.1"
   },
   "repository": {

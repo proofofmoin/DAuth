@@ -46,7 +46,12 @@ app.get('/shakehand',function(req, res) {
   console.log('done',unsign);
   //console.log(productionProfile)
   if (productionProfile.authorizedusers.includes(unsign)){
-    res.sendStatus(200);
+   
+request('http://www.google.com', function (error, response, body) {
+  console.log('error:', error); // Print the error if one occurred
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  res.send(body) // Print the HTML for the Google homepage.
+});
   }
   else{
     res.sendStatus(403);

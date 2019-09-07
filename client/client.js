@@ -1,6 +1,9 @@
 // require blockchain-core dependencies
 const Web3 = require('web3');
 
+const request       = require('request');
+
+
 // require blockchain-core
 const { Ipfs, createDefaultRuntime, DigitalTwin, Container } = require('@evan.network/api-blockchain-core');
 
@@ -11,7 +14,7 @@ const ipfsConfig = { host: 'ipfs.test.evan.network', port: '443', protocol: 'htt
 const web3Provider = 'wss://testcore.evan.network/ws'
 
 
-module.exports = async function init(callback) {
+async function init() {
     // initialize dependencies
     const provider = new Web3.providers.WebsocketProvider(
         web3Provider,
@@ -37,11 +40,15 @@ module.exports = async function init(callback) {
     // console.log("prive", privateKey)
 
     const siginfo = runtime.web3.eth.accounts.sign("AltTubeRocks", `0x${privateKey}`)
-    // console.log("signature == ", siginfo);
-    
-    if (callback) {callback(siginfo); }
-}
+    console.log("signature == ", siginfo);
 
+    
+    request.get("http://localhost:4017/shakehand", { 
+        "message": "AltTubeRocks",
+        "messageHash":"0xe032ccfd9f39a07e75e28688568699d6251b12a339061e7714c7452101b1f4c4",
+        "signature":"0xfa0506373f40224bef3dc6f583c415c21945bd9235ef05e00debc77d9a0facc311a5bf1c41aab661b817470183d2dd188db55922f6065e3266d8ea56535409831b"
+    })
+}
 
 init();
 

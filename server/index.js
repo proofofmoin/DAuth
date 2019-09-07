@@ -51,7 +51,7 @@ app.get('/shakehand/:pathurl',function(req, res) {
   //console.log(productionProfile)
   if (productionProfile.authorizedusers.includes(unsign)){
 //proxy.web(req,res,{target: "http://"+targetUrl});
-rp("http://"+targetUrl)
+rp("https://"+targetUrl)
   .then(function(html) {
     console.log(html);
     res.send(html);

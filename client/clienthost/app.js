@@ -63,8 +63,8 @@ app.get('/*',async function(req,res,next){
 
   parsedSig = siginfo
 
-  //var url = 'http://pom-hackathon_pom-vpn-server:4017/shakehand'+req.originalUrl
-  var url = 'http://localhost:4017/shakehand'+req.originalUrl
+  var url = 'http://pom-hackathon_pom-vpn-server:4017/shakehand'+req.originalUrl
+  //var url = 'http://localhost:4017/shakehand'+req.originalUrl
 
   var options = {
     method: 'get',

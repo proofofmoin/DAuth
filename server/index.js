@@ -35,7 +35,7 @@ app.get('/ping', function(req, res) {
 });
 
 app.get('/shakehand',function(req, res) {
-  const siginfo = req.body
+  const siginfo = req.body;//JSON.parse(req.body);
  console.log("signature info == ", siginfo);
 
   //await this.runtime.executor.signer.accountStore.getPrivateKey(this.config.ethAccount)

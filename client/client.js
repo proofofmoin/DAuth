@@ -40,14 +40,38 @@ async function init() {
     // console.log("prive", privateKey)
 
     const siginfo = runtime.web3.eth.accounts.sign("AltTubeRocks", `0x${privateKey}`)
-    console.log("signature == ", siginfo);
+    /* 
+    const parsedSig= JSON.stringify(siginfo);
+    console.log("parsedSig == ", parsedSig); */
 
-    
-    request.get("http://localhost:4017/shakehand", { 
-        "message": "AltTubeRocks",
-        "messageHash":"0xe032ccfd9f39a07e75e28688568699d6251b12a339061e7714c7452101b1f4c4",
-        "signature":"0xfa0506373f40224bef3dc6f583c415c21945bd9235ef05e00debc77d9a0facc311a5bf1c41aab661b817470183d2dd188db55922f6065e3266d8ea56535409831b"
-    })
+/*     { "message": "AltTubeRocks",
+    "messageHash":
+     "0xe032ccfd9f39a07e75e28688568699d6251b12a339061e7714c7452101b1f4c4",
+    "signature":
+     "0xfa0506373f40224bef3dc6f583c415c21945bd9235ef05e0lklklklk0debc77d9a0facc311a5bf1c41aab661b817470183d2dd188db55922f6065e3266d8ea56535409831b" }
+ */  
+parsedSig = siginfo
+
+
+    var url = 'http://localhost:4017/shakehand'
+
+    var options = {
+      method: 'get',
+      body: parsedSig,
+      json: true,
+      url: url
+    }
+    request(options, function (err, res, body) {
+        if (err) {
+          console.error('error posting json: ', err)
+          throw err
+        }
+        var headers = res.headers
+        var statusCode = res.statusCode
+        console.log('headers: ', headers)
+        console.log('statusCode: ', statusCode)
+        console.log('body: ', body)
+      }) 
 }
 
 init();

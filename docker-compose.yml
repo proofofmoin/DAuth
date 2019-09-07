@@ -22,7 +22,7 @@ services:
         - "traefik.entrypoints=https"
         - "traefik.frontend.passHostHeader=true"
         - "traefik.frontend.rule=Host:pom-alttube-vpm.stokr-staging.de"
-        - "traefik.port=3000"
+        - "traefik.port=3005"
   pom-vpn-server:
     image: reg.stokr-staging.de/pom/pom-vpn-server:latest
     networks:

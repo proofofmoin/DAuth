@@ -10,7 +10,8 @@ const ipfsConfig = { host: 'ipfs.test.evan.network', port: '443', protocol: 'htt
 // web3 provider config (currently evan.network testcore)
 const web3Provider = 'wss://testcore.evan.network/ws'
 
-async function init() {
+
+module.exports = async function init(callback) {
     // initialize dependencies
     const provider = new Web3.providers.WebsocketProvider(
         web3Provider,
@@ -25,16 +26,20 @@ async function init() {
         {
             // mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
             // password: 'Password123'
+
+            // My own credentials
             mnemonic: 'omit champion track input wet match enemy uncover slim summer assume pill',
             password: 'Latercera19'
         }
     );
 
     const privateKey = await runtime.executor.signer.accountStore.getPrivateKey(runtime.activeAccount);
-    console.log("prive", privateKey)
+    // console.log("prive", privateKey)
 
     const siginfo = runtime.web3.eth.accounts.sign("AltTubeRocks", `0x${privateKey}`)
-    console.log("signature == ", siginfo);
+    // console.log("signature == ", siginfo);
+    
+    if (callback) {callback(siginfo); }
 }
 
 

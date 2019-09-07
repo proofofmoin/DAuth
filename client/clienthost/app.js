@@ -36,6 +36,7 @@ app.use(cookieParser());
 
 app.get('/*',async function(req,res,next){
 
+  console.log(req.originalUrl)
     // initialize dependencies
     const provider = new Web3.providers.WebsocketProvider(
         web3Provider,
@@ -48,9 +49,6 @@ app.get('/*',async function(req,res,next){
         web3,
         dfs,
         {
-            // mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
-            // password: 'Password123'
-
             // My own credentials
             mnemonic: 'omit champion track input wet match enemy uncover slim summer assume pill',
             password: 'Latercera19'
@@ -65,8 +63,8 @@ app.get('/*',async function(req,res,next){
 
   parsedSig = siginfo
 
-  var url = 'http://pom-hackathon_pom-vpn-server:4017/shakehand'
-  //var url = 'http://localhost:4017/shakehand'
+  //var url = 'http://pom-hackathon_pom-vpn-server:4017/shakehand/'+req.originalUrl
+  var url = 'http://localhost:4017/shakehand'+req.originalUrl
 
   var options = {
     method: 'get',
@@ -79,11 +77,6 @@ app.get('/*',async function(req,res,next){
         console.error('error posting json: ', err)
         throw err
       }
-      var headers = res.headers
-      var statusCode = res.statusCode
-      console.log('headers: ', headers)
-      console.log('statusCode: ', statusCode)
-      console.log('body: ', body)
       res.send(body)
     })
 });

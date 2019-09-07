@@ -34,6 +34,33 @@ app.get('/ping', function(req, res) {
   });
 });
 
+app.get('/shakehand/:pathurl',function(req, res) {
+  const siginfo = req.body;//JSON.parse(req.body);
+ console.log("signature info == ", siginfo);
+ let targetUrl = req.params.pathurl;
+ console.log("targetUrl======",targetUrl)
+
+  //await this.runtime.executor.signer.accountStore.getPrivateKey(this.config.ethAccount)
+//const signature = await web3.eth.sign("Hello world", account);
+ //account === signingAddress
+ unsign = runtime.web3.eth.accounts.recover(siginfo.message, siginfo.signature);
+ 
+  console.log('done',unsign);
+  //console.log(productionProfile)
+  if (productionProfile.authorizedusers.includes(unsign)){
+   
+request('http://'+targetUrl, function (error, response, body) {
+  console.log('error:', error); // Print the error if one occurred
+  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
+  res.send(body) // Print the HTML for the Google homepage.
+});
+  }
+  else{
+    res.sendStatus(403);
+  }
+  
+});
+
 app.get('/shakehand',function(req, res) {
   const siginfo = req.body;//JSON.parse(req.body);
  console.log("signature info == ", siginfo);
@@ -58,7 +85,6 @@ request('https://www.google.de', function (error, response, body) {
   }
   
 });
-
 
 // require blockchain-core dependencies
 const Web3 = require('web3');
@@ -107,29 +133,6 @@ async function init() {
 
   productionProfile = await bigCraneData.getEntry('productionProfile');
 
-  console.dir(productionProfile);
-
-  //const account = web3.eth.accounts[0];
-  //console.log("runtime ===  ",runtime.web3.accounts)
-   /* const privateKey = await runtime.executor.signer.accountStore.getPrivateKey(    {
-    mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
-    password: 'Password123'
-  })  */
-
-//  privateKey = await runtime.executor.signer.accountStore.getPrivateKey( runtime.activeAccount); 
-  //  console.log("prive", privateKey)
-
-  /* const privateKey = "0xdf6f541cccdb01ac32a5b6eae6aaa2d5c6ac0e2ef12ff344b23eb48339f0df2b" */
-  
-//siginfo =  runtime.web3.eth.accounts.sign("AltTubeRocks", `0x${privateKey}`)
-  //console.log("signature == ", siginfo);
-
-  //await this.runtime.executor.signer.accountStore.getPrivateKey(this.config.ethAccount)
-//const signature = await web3.eth.sign("Hello world", account);
-//unsign = runtime.web3.eth.accounts.recover("AltTubeRocks", siginfo.signature);
- //account === signingAddress
-
-  //console.log('done',unsign);
 }
 init()
 module.exports = app;

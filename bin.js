@@ -41,12 +41,15 @@ async function init() {
 
   const account = web3.eth.accounts[0];
   //console.log("runtime ===  ",runtime.web3.accounts)
-  const privateKey = await runtime.executor.signer.accountStore.getPrivateKey(    {
+  /* const privateKey = await runtime.executor.signer.accountStore.getPrivateKey(    {
     mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
     password: 'Password123'
-  })
-  console.log(privateKey)
-  //this.runtime.web3.eth.accounts.sign(toSignedMessage, `0x${privateKey}`)
+  }) */
+  const privateKey = "0xdf6f541cccdb01ac32a5b6eae6aaa2d5c6ac0e2ef12ff344b23eb48339f0df2b"
+  
+  const signature =  runtime.web3.eth.accounts.sign("AltTubeRocks", privateKey)
+  console.log("signature == ", signature);
+  
   //await this.runtime.executor.signer.accountStore.getPrivateKey(this.config.ethAccount)
 //const signature = await web3.eth.sign("Hello world", account);
 //const signingAddress = web3.eth.accounts.recover("Hello world", signature);

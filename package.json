@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/proofofmoin-hackathon/alt_tube#readme",
   "dependencies": {
+    "@evan.network/api-blockchain-core": "^2.11.0",
     "@types/web3": "^1.0.19",
     "web3": "^1.2.1"
   }

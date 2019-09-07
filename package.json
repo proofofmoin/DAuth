@@ -1,0 +1,24 @@
+{
+  "name": "alt_tube",
+  "version": "1.0.0",
+  "description": "TDA",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/proofofmoin-hackathon/alt_tube.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/proofofmoin-hackathon/alt_tube/issues"
+  },
+  "homepage": "https://github.com/proofofmoin-hackathon/alt_tube#readme",
+  "dependencies": {
+    "@types/web3": "^1.0.19",
+    "web3": "^1.2.1"
+  }
+}

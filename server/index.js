@@ -35,11 +35,17 @@ app.get('/ping', function(req, res) {
 });
 
 app.get('/shakehand',function(req, res) {
-  
+  const siginfo = req.body
+ console.log("signature info == ", siginfo);
+
+  //await this.runtime.executor.signer.accountStore.getPrivateKey(this.config.ethAccount)
+//const signature = await web3.eth.sign("Hello world", account);
+ //account === signingAddress
+ unsign = runtime.web3.eth.accounts.recover(siginfo.message, siginfo.signature);
+  console.log('done',unsign);
+  res.sendStatus(200);
 });
-app.get('/shakehand',function(req, res) {
-  
-});
+
 
 // require blockchain-core dependencies
 const Web3 = require('web3');
@@ -53,6 +59,13 @@ const ipfsConfig = {host: 'ipfs.test.evan.network', port: '443', protocol: 'http
 const web3Provider = 'wss://testcore.evan.network/ws'
 
 
+
+let privateKey;
+let siginfo;
+let unsign;
+let runtime 
+
+async function init() {
   // initialize dependencies
   const provider = new Web3.providers.WebsocketProvider(
     web3Provider,
@@ -61,7 +74,7 @@ const web3Provider = 'wss://testcore.evan.network/ws'
   const dfs = new Ipfs({ dfsConfig: ipfsConfig });
 
   // create runtime
-  const runtime = await createDefaultRuntime(
+   runtime = await createDefaultRuntime(
     web3,
     dfs,
     {
@@ -69,13 +82,6 @@ const web3Provider = 'wss://testcore.evan.network/ws'
       password: 'Password123'
     }
   );
-
-  const account = web3.eth.accounts[0];
-const signature = await web3.eth.sign("Hello world", account);
-const signingAddress = web3.eth.accounts.recover("Hello world", 
-signature);
- account === signingAddress
-
 
   const bigCrane = new DigitalTwin(runtime, {
     accountId: runtime.activeAccount,
@@ -89,6 +95,28 @@ signature);
 
   console.dir(productionProfile);
 
-  console.log('done');
+  const account = web3.eth.accounts[0];
+  //console.log("runtime ===  ",runtime.web3.accounts)
+   /* const privateKey = await runtime.executor.signer.accountStore.getPrivateKey(    {
+    mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
+    password: 'Password123'
+  })  */
 
+  privateKey = await runtime.executor.signer.accountStore.getPrivateKey( runtime.activeAccount); 
+  //  console.log("prive", privateKey)
+
+  /* const privateKey = "0xdf6f541cccdb01ac32a5b6eae6aaa2d5c6ac0e2ef12ff344b23eb48339f0df2b" */
+  
+siginfo =  runtime.web3.eth.accounts.sign("AltTubeRocks", `0x${privateKey}`)
+  //console.log("signature == ", siginfo);
+
+  //await this.runtime.executor.signer.accountStore.getPrivateKey(this.config.ethAccount)
+//const signature = await web3.eth.sign("Hello world", account);
+unsign = runtime.web3.eth.accounts.recover("AltTubeRocks", siginfo.signature);
+ //account === signingAddress
+
+  //console.log('done',unsign);
+}
+init()
+module.exports = app;
 

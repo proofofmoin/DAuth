@@ -24,7 +24,7 @@ services:
         - "traefik.frontend.rule=Host:pom-alttube-vpm.stokr-staging.de"
         - "traefik.port=3000"
   pom-vpn-server:
-    image: reg.stokr-staging.de/stokr/pom-vpn-server:latest
+    image: reg.stokr-staging.de/pom/pom-vpn-server:latest
     networks:
       - internal-net-l1
       - traefik

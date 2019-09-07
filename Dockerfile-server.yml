@@ -1,6 +1,7 @@
 FROM node:8
 
 WORKDIR /usr/src/app
+
 ####debug######
 # install vim
 RUN apt-get update \
@@ -11,10 +12,13 @@ RUN apt-get update \
 RUN npm install -g nodemon
 ######debug#######
 
+
 COPY package*.json ./
 
 RUN npm install
 
 COPY . ./
 
-CMD ["npm","run" , "client"]
+EXPOSE 4017
+
+CMD ["npm" ,"run", "server"]

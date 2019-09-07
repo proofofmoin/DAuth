@@ -1,0 +1,33 @@
+version: '3.4'
+
+networks: 
+  traefik:
+    external: true
+  internal-net-l1:
+    external: true
+
+services:
+  pom-vpn-client:
+    image: reg.stokr-staging.de/pom/pom-vpn-client:latest
+    networks:
+      - internal-net-l1
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - "traefik.backend.loadbalancer.stickiness=false"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.backend=pom-vpn-client"
+        - "traefik.entrypoints=https"
+        - "traefik.frontend.passHostHeader=true"
+        - "traefik.frontend.rule=Host:pom-alttube-vpm.stokr-staging.de"
+        - "traefik.port=3000"
+  pom-vpn-server:
+    image: reg.stokr-staging.de/stokr/pom-vpn-server:latest
+    networks:
+      - internal-net-l1
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1

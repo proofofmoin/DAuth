@@ -4,7 +4,8 @@
   "description": "TDA",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "server": "nodemon server/bin/www"
+    "server": "nodemon server/bin/www",
+    "client": "nodemon client/client.js"
   },
   "dependencies": {
     "@evan.network/api-blockchain-core": "^2.11.0",

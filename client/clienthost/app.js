@@ -34,13 +34,39 @@ app.use(cookieParser());
 
 //app.use('/*', apiRouter);
 
-app.get('/*',function(req,res,next){
-  
+app.get('/*',async function(req,res,next){
+
+    // initialize dependencies
+    const provider = new Web3.providers.WebsocketProvider(
+        web3Provider,
+        { clientConfig: { keepalive: true, keepaliveInterval: 5000 } });
+     const web3 = new Web3(provider, { transactionConfirmationBlocks: 1 });
+    const dfs = new Ipfs({ dfsConfig: ipfsConfig });
+
+    // create runtime
+     const runtime = await createDefaultRuntime(
+        web3,
+        dfs,
+        {
+            // mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
+            // password: 'Password123'
+
+            // My own credentials
+            mnemonic: 'omit champion track input wet match enemy uncover slim summer assume pill',
+            password: 'Latercera19'
+        }
+    );
+
+    const privateKey = await runtime.executor.signer.accountStore.getPrivateKey(runtime.activeAccount);
+
+
+
   const siginfo = runtime.web3.eth.accounts.sign("AltTubeRocks", `0x${privateKey}`)
 
   parsedSig = siginfo
 
-  var url = 'pom-hackathon_pom-vpn-server:4017/shakehand'
+  var url = 'http://pom-hackathon_pom-vpn-server:4017/shakehand'
+  //var url = 'http://localhost:4017/shakehand'
 
   var options = {
     method: 'get',
@@ -78,33 +104,3 @@ app.use(function(req, res, next) {
   });
   
   module.exports = app;
-  
-let privateKey;
-async function init() {
-    // initialize dependencies
-    const provider = new Web3.providers.WebsocketProvider(
-        web3Provider,
-        { clientConfig: { keepalive: true, keepaliveInterval: 5000 } });
-    const web3 = new Web3(provider, { transactionConfirmationBlocks: 1 });
-    const dfs = new Ipfs({ dfsConfig: ipfsConfig });
-
-    // create runtime
-    const runtime = await createDefaultRuntime(
-        web3,
-        dfs,
-        {
-            // mnemonic: 'connect neither prefer select wild grit shield vast tornado blouse record flat',
-            // password: 'Password123'
-
-            // My own credentials
-            mnemonic: 'omit champion track input wet match enemy uncover slim summer assume pill',
-            password: 'Latercera19'
-        }
-    );
-
-    privateKey = await runtime.executor.signer.accountStore.getPrivateKey(runtime.activeAccount);
-
-
-}
-
-init();  

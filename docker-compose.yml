@@ -23,6 +23,7 @@ services:
         - "traefik.frontend.passHostHeader=true"
         - "traefik.frontend.rule=Host:pom-vpn-proxy-client.stokr-staging.de"
         - "traefik.port=3005"
+
   pom-vpn-server:
     image: reg.stokr-staging.de/pom/pom-vpn-server:latest
     networks:
@@ -31,3 +32,21 @@ services:
     deploy:
       mode: replicated
       replicas: 1
+
+  pom-vpn-server-public:
+    image: reg.stokr-staging.de/pom/pom-vpn-server:latest
+    networks:
+      - internal-net-l1
+      - traefik
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - "traefik.backend.loadbalancer.stickiness=false"
+        - "traefik.backend.loadbalancer.swarm=true"
+        - "traefik.backend=pom-vpn-server-public"
+        - "traefik.entrypoints=https"
+        - "traefik.frontend.passHostHeader=true"
+        - "traefik.frontend.rule=Host:pom-vpn-proxy-server.stokr-staging.de"
+        - "traefik.port=4017"
+
